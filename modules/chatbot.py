@@ -19,7 +19,8 @@ load_dotenv()
 # ---------------------------------------------------------------------------- #
 convo_length = 30
 # --------------------------------- api keys --------------------------------- #
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+# openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = "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"
 pinecone.init(os.environ.get("PINECONE_API_KEY"), environment='us-east4-gcp')
 
 
@@ -55,11 +56,6 @@ def load_conversation(results):
 
     if not result:
         return None
-
-    # sort them all chronologically
-    # ordered = sorted(result, key=lambda d: d['time'], reverse=False)
-    # messages = [i['message'] for i in ordered]
-    # return '\n'.join(messages).strip()
 
     ordered = sorted(result, key=lambda d: d['time'], reverse=False)
     messages = [f"{i['speaker']}: {i['message']}" for i in ordered]
