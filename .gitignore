@@ -132,6 +132,6 @@ dmypy.json
 *.vscode
 *.idea
 *.bin
-.env
+*.env
 
 gpt_logs/
