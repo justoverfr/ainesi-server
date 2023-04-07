@@ -15,4 +15,5 @@ USER: <<MESSAGE>>
 
 
 
+I will now provide a friendly, cheerful and empathetic response, followed by a question:
 AInesi:
