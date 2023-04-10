@@ -1,55 +1,55 @@
-# import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-# import requests
-# from requests.structures import CaseInsensitiveDict
+
+import openai
+import pinecone
 
 import modules.chatbot as chatbot
 
 from dotenv import load_dotenv
+load_dotenv()
 
+# --------------------------------- api keys --------------------------------- #
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+pinecone.init(os.environ.get("PINECONE_API_KEY"), environment='us-east4-gcp')
+
+PORT = 5000
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/dialogflow', methods=['POST'])
-def dialogflow():
+@app.route('/chatbot', methods=['POST'])
+def converse():
+    """
+    Receive a message from the user and send a response.
+
+    Returns:
+        str: Response.
+    """
+    # receive the message from the user
     req_data = request.get_json(force=True)
-    intent_name = req_data['queryResult']['intent']['displayName']
+    user_message = req_data['queryResult']['queryText']
 
-    if intent_name == 'Default Welcome Intent':
-        response = welcome()
-    elif intent_name == 'CustomIntent' or intent_name == 'Default Fallback Intent':
-        response = chatbot.get_response(
-            req_data['queryResult']['queryText'])
-    else:
-        response = "I don't understand."
+    # send the message to the chatbot and get the response
+    response = chatbot.get_response(user_message)
 
+    # send the response to the user
     return jsonify({'fulfillmentText': response})
-
-
-def welcome():
-    return "Hi, I am your virtual personal mental health assistant. How are you doing today?"
 
 
 @app.route('/', methods=['GET'])
 def home():
     """
-    Affiche un message d'accueil sur la page d'accueil du serveur.
+    Display a message.
 
     Returns:
-        str: Message d'accueil du serveur.
+        str: Message.
     """
-    return "Bienvenue sur le serveur AINESI."
+    return "AINESI Server"
 
 
 if __name__ == '__main__':
-    # load_dotenv()
-
-    # openai_api_key = os.environ.get("OPENAI_API_KEY")
-    # pinecone_api_key = os.environ.get("PINECONE_API_KEY")
-
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", PORT))
     app.run(host='0.0.0.0', port=port)

@@ -134,4 +134,7 @@ dmypy.json
 *.bin
 .env
 
-gpt_logs/
+gpt_logs/*
+logs/*
+tests/
+test/
