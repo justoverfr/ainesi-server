@@ -17,4 +17,4 @@ When it's below 70%, you must cheer the user up to help him feel better
 When it's below 80%, you can tell jokes.
 When it's below 100%, just chat about any topics, don't hesitate to start conversations.
 
-Current happiness level: 25%
+Current happiness level: <<HAPPINESS>>
