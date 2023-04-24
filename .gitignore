@@ -128,13 +128,17 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# User specific
 *.DS_Store
 *.vscode
 *.idea
 *.bin
 .env
 
+# Logs
 gpt_logs/*
 logs/*
+
+# Tests
 tests/
 test/
